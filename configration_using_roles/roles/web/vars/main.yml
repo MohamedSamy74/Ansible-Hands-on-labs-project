@@ -1,0 +1,9 @@
+package_name: nginx
+
+file_name: index.html.j2
+my_message: Hi, this is template test!
+
+my_files: 
+  # - index.html
+  - style.css
+  - script.js

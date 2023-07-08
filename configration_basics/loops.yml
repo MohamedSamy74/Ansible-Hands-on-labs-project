@@ -1,0 +1,24 @@
+- name: play with loops
+  hosts: web_servers
+  gather_facts: false
+
+  tasks:
+  - name: task1
+    apt:
+      name: "{{ item.package_name }}"
+      state: "{{ item.package_state }}"
+    loop:
+      - { package_name: "nginx", package_state: "present" }
+      - { package_name: "curl", package_state: "absent" }
+      - { package_name: "ssh", package_state: "present" }
+
+  # tasks:
+  # - name: my task with loops
+  #   apt:
+  #     name: "{{ item }}"
+  #     state: latest
+  #   loop: 
+  #     - nginx
+  #     - curl
+  #     - ssh
+  #     - sudo

@@ -1,0 +1,17 @@
+- name: my play with handlers
+  hosts: web_servers
+  tasks:
+
+  - name: my task1 with handlers
+    apt:
+      name: nginx
+    notify: my_handler
+    changed_when: true
+  
+  handlers:
+  - name: my_handler
+    sysvinit:
+      name: nginx
+      state: restarted
+      enabled: true
+    

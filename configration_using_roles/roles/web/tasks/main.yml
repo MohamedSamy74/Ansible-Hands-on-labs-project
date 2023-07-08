@@ -1,0 +1,27 @@
+- name: installing a package
+  apt:
+    name: "{{ package_name }}"
+    state: latest
+  notify: copy_handler
+  # register: install_result
+
+- name: copy dynamic file 
+  template:
+    src: "{{file_name}}"
+    dest: /var/www/html/index.html
+  notify: restart_handler
+
+# - name: task2 (copying)
+#   copy: 
+#     src: "{{ item }}"
+#     dest: /var/www/html/
+#   loop: "{{ my_files }}"
+#   when: install_result.changed == true
+#   register: copy_result
+
+# - name: task3 (Restart)
+#   sysvinit:
+#     name: "{{ package_name }}"
+#     state: restarted
+#     enabled: yes
+#   when: copy_result.changed == true

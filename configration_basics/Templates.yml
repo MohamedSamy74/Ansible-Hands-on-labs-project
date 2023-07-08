@@ -1,0 +1,11 @@
+- name: my play with templates
+  hosts: web_servers
+  gather_facts: false
+  vars:
+    welcome_msg: ===== Hello! this is Ansible course ====== 
+  
+  tasks:
+  - name: task1 (Copy dynamic content from controller to host 1 using templates)
+    template:
+      src: ./index.html.j2
+      dest: /var/www/html/index.html

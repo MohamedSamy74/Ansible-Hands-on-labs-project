@@ -1,0 +1,11 @@
+- name: play with variables
+  hosts: web_servers
+  gather_facts: false
+  # vars:
+  #   package_name: nginx
+  #   package_version: latest
+  tasks:
+  - name: task1 (Install latest nginx)
+    apt:
+      name: "{{ package_name }}"
+      state: "{{ package_version }}"

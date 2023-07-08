@@ -1,0 +1,50 @@
+# - name: play1
+#   hosts: web_servers
+#   tasks:
+#   - name: task1 
+#     ping:
+
+# - name: play2
+#   hosts: web_servers
+#   tasks:
+#   - name: task2
+#     command: cd mydir
+#     register: output_value
+#     ignore_errors: true
+#   - name: failed command debugining
+#     debug:
+#       msg: "{{ output_value }}"
+
+- name: play3
+  hosts: web_servers
+  gather_facts: false
+  tasks:
+  - name: task1 (Update cache)
+    apt:
+      update_cache: true
+
+  - name: task2 (Install latest nginx)
+    apt:
+      name: nginx
+      state: latest
+
+  - name: task3 (Copy index.html from controller to host 1)
+    ansible.builtin.copy:
+      src: ~/Ansible/index.html
+      dest: /var/www/html/index.html
+
+  - name: task4 (Restart nginx service)
+    ansible.builtin.sysvinit:
+      name: nginx
+      state: restarted
+      enabled: yes
+
+  # - name: task4 (Restart nginx)
+  #   service:
+  #     name: nginx
+  #     state: restarted
+  # - name: task4
+  #   ansible.builtin.systemd:
+  #     state: restarted
+  #     daemon_reload: true
+  #     name: nginx

@@ -1,0 +1,14 @@
+- name: copy_handler
+  copy: 
+    src: "{{ item }}"
+    dest: /var/www/html/
+  loop: "{{ my_files }}"
+  changed_when: true
+  notify: restart_handler
+
+- name: restart_handler
+  sysvinit:
+    name: "{{ package_name }}"
+    state: restarted
+    enabled: yes
+

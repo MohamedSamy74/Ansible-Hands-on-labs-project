@@ -1,0 +1,21 @@
+- name: my play with conditions
+  hosts: web_servers
+  gather_facts: true
+
+  tasks:
+  - name: my task1 with conditions
+    apt:
+      name: nginx
+    when: ansible_facts['distribution'] == "Ubuntu"
+
+  - name: my task2 with conditions
+    apt:
+      name: httpd
+    when: ansible_facts['distribution'] == "CentOS"
+
+  - name: my task3 with conditions
+    ansible.builtin.sysvinit:
+      name: nginx
+      state: restarted
+      enabled: yes
+    when: ansible_facts['distribution'] == "Ubuntu"

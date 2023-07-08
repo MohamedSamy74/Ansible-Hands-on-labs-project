@@ -1,0 +1,27 @@
+- name: my play with register
+  hosts: web_servers
+  gather_facts: true
+
+  tasks:
+  - name: my task2 with register&conditions 
+    apt:
+      name: nginx
+      state: latest
+    register: install_result
+
+  - name: my task3 with register&conditions 
+    sysvinit:
+      name: nginx
+      state: restarted
+      enabled: yes
+    when: install_result.changed or not install_result.failed
+
+  # tasks:
+  # - name: my task1 with register
+  #   command: cat /var/www/html/index.html
+  #   register: my_result
+
+  # - name: my task2 with register
+  #   debug:
+  #     var: my_result
+  
